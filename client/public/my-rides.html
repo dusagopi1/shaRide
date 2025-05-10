@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Rides - Rapido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Configure Tailwind if needed
+    tailwind.config = {
+      theme: {
+        extend: {}
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-100">
+  <!-- Navigation bar will be added by navigation.js -->
+
+  <!-- Main Content -->
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">My Rides</h1>
+    
+    <!-- Tabs for different ride types -->
+    <div class="mb-6 border-b border-gray-200">
+      <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
+        <li class="mr-2">
+          <button class="tab-btn active inline-block p-4 border-b-2 border-blue-600 rounded-t-lg active text-blue-600" data-status="all">All Rides</button>
+        </li>
+        <li class="mr-2">
+          <button class="tab-btn inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" data-status="waiting">Waiting Rides</button>
+        </li>
+        <li class="mr-2">
+          <button class="tab-btn inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" data-status="confirmed">Confirmed Rides</button>
+        </li>
+        <li class="mr-2">
+          <button class="tab-btn inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" data-status="completed">Completed Rides</button>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Loading State -->
+    <div id="loading-indicator" class="text-center p-8">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+      <p class="mt-4 text-gray-600">Loading your rides...</p>
+    </div>
+    
+    <!-- Rides Container -->
+    <div id="rides-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+      <!-- Rides will be displayed here -->
+    </div>
+    
+    <!-- Empty State -->
+    <div id="empty-state" class="text-center p-8 bg-white rounded-lg shadow-md hidden">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+      </svg>
+      <h2 class="text-xl font-semibold mb-2">No rides found</h2>
+      <p class="text-gray-600 mb-4">You don't have any rides matching the selected filter.</p>
+      <div class="flex justify-center space-x-4">
+        <a href="/share.html" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Share a Ride</a>
+        <a href="/ask.html" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Find a Ride</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Ride Card Template (Hidden) -->
+  <template id="ride-card-template">
+    <div class="ride-card bg-white rounded-lg shadow-md overflow-hidden">
+      <div class="ride-status p-2 text-center text-white font-semibold"></div>
+      <div class="p-5">
+        <div class="flex justify-between mb-4">
+          <div>
+            <span class="text-xs text-gray-500">Ride ID</span>
+            <p class="ride-id text-sm font-medium truncate"></p>
+          </div>
+          <div>
+            <span class="text-xs text-gray-500">Created On</span>
+            <p class="ride-date text-sm font-medium"></p>
+          </div>
+        </div>
+        
+        <div class="mb-4">
+          <div class="flex items-center mb-2">
+            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
+              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+              </svg>
+            </div>
+            <div>
+              <span class="text-xs text-gray-500">PICKUP</span>
+              <p class="ride-pickup font-medium"></p>
+            </div>
+          </div>
+          
+          <div class="flex items-center">
+            <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center mr-2">
+              <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+              </svg>
+            </div>
+            <div>
+              <span class="text-xs text-gray-500">DESTINATION</span>
+              <p class="ride-drop font-medium"></p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="ride-participants mb-4">
+          <div class="grid grid-cols-2 gap-2">
+            <div class="bg-gray-50 p-2 rounded">
+              <span class="text-xs text-gray-500">DRIVER</span>
+              <p class="ride-driver font-medium"></p>
+            </div>
+            <div class="bg-gray-50 p-2 rounded">
+              <span class="text-xs text-gray-500">RIDER</span>
+              <p class="ride-rider font-medium"></p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex space-x-2">
+          <a href="#" class="ride-details-link flex-1 bg-blue-500 text-white py-2 px-4 rounded text-center hover:bg-blue-600 text-sm">View Details</a>
+          <button class="cancel-ride-btn flex-1 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 text-sm">Cancel Ride</button>
+        </div>
+      </div>
+    </div>
+  </template>
+  
+  <script src="js/auth.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/my-rides.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find Rides</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto p-4 max-w-4xl">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-blue-700"><i class="fas fa-car-side mr-2"></i>Available Rides</h1>
+      
+      <!-- Filter section -->
+      <div class="flex items-center space-x-4">
+        <input type="text" id="search-location" placeholder="Search location" 
+          class="px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <button id="refresh-btn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+          <i class="fas fa-sync-alt mr-1"></i> Refresh
+        </button>
+      </div>
+    </div>
+    
+    <!-- Rides list with better UI -->
+    <div id="rides-list" class="space-y-6"></div>
+    
+    <!-- Loading state -->
+    <div id="loading-indicator" class="text-center py-6 hidden">
+      <i class="fas fa-spinner fa-spin text-blue-500 text-3xl"></i>
+      <p class="mt-2 text-gray-600">Loading available rides...</p>
+    </div>
+    
+    <!-- Empty state -->
+    <div id="empty-state" class="hidden bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
+      <i class="fas fa-exclamation-circle text-yellow-500 text-3xl mb-2"></i>
+      <h3 class="text-lg font-semibold text-yellow-700">No rides available</h3>
+      <p class="text-gray-600 mt-2">There are no rides available at the moment. Please check back later.</p>
+    </div>
+  </div>
+  
+  <!-- Ride join confirmation modal (hidden by default) -->
+  <div id="join-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+      <div id="join-modal-content"></div>
+    </div>
+  </div>
+  
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/sockets.js"></script>
+  <script src="/js/navigation.js"></script>
+  <script src="/js/ask.js"></script>
+</body>
+</html>

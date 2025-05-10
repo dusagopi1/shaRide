@@ -1,0 +1,1 @@
+{"functions":[{"bundler":"zisi","buildData":{"runtimeAPIVersion":1},"mainFile":"C:\\rapido3\\netlify\\functions\\api.js","name":"api","priority":10,"runtimeVersion":"nodejs20.x","path":"C:\\rapido3\\.netlify\\functions\\api.zip","runtime":"js"}],"system":{"arch":"x64","platform":"win32"},"timestamp":1746896588784,"version":1}
