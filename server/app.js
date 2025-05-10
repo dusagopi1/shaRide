@@ -267,7 +267,7 @@ io.on('connection', (socket) => {
 
 // Determine MongoDB connection string
 // Use MONGODB_URI environment variable from Render in production, or local MongoDB for development
-const dbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/DEEPRIDE';
+const dbUri = process.env.MONGODB_URI;
 
 // Database connection
 mongoose.connect(dbUri)
