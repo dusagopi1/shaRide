@@ -33,7 +33,7 @@ A real-time ride sharing platform built with Node.js, Express, MongoDB, and Sock
 2. Configure environment variables:
    - Create a `.env` file in the root directory with:
      ```
-     MONGODB_URI=mongodb://localhost:27017/DEEPRIDE
+     MONGODB_URI=mongodb://localhost17/DEEPRIDE
      JWT_SECRET=your_jwt_secret_key
      PORT=3000
      ```
