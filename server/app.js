@@ -267,7 +267,11 @@ io.on('connection', (socket) => {
 
 // Determine MongoDB connection string
 // Use MONGODB_URI environment variable from Render in production, or local MongoDB for development
+<<<<<<< HEAD
+const dbUri = process.env.MONGODB_URI
+=======
 const dbUri = process.env.MONGODB_URI;
+>>>>>>> 76743cff1a8900656278a98230c648d2bccac93d
 
 // Database connection
 mongoose.connect(dbUri)
